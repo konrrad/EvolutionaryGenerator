@@ -1,6 +1,6 @@
 package pl.edu.agh.map;
 
-import pl.edu.agh.animal.Vector2;
+import pl.edu.agh.coordinates.Vector2;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -34,12 +34,12 @@ public abstract class Zone {
         this.plantsPositions.remove(position);
     }
 
-    public void plantRandomly()
+    public void plantRandomly(Set<Vector2> occupiedPositions)
     {
         for(int attemptNumber=0;attemptNumber<NUM_OF_PLACING_ATTEMPTS;attemptNumber++)
         {
             final Vector2 candidate=getCandidateForPlanting();
-            if(plantsPositions.add(candidate)) return;
+            if(!occupiedPositions.contains(candidate)&&plantsPositions.add(candidate)) return;
 
         }
     }

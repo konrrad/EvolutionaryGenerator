@@ -1,4 +1,4 @@
-package pl.edu.agh.animal;
+package pl.edu.agh.coordinates;
 
 import java.util.Objects;
 

@@ -1,7 +1,5 @@
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
-import pl.edu.agh.animal.Genome;
-import pl.edu.agh.animal.GenomeCreator;
+import pl.edu.agh.animal.genome.GenomeCreator;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

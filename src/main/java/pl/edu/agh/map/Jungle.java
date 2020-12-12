@@ -1,6 +1,6 @@
 package pl.edu.agh.map;
 
-import pl.edu.agh.animal.Vector2;
+import pl.edu.agh.coordinates.Vector2;
 
 public class Jungle extends Zone{
     public Jungle(Vector2 northEastCorner, Vector2 southWestCorner) {

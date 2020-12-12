@@ -1,14 +1,12 @@
-package pl.edu.agh.animal;
+package pl.edu.agh.animal.genome;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Genome {
     public static final int NUM_OF_GENES=32;
     public static final int NUM_OF_DISTINCT_GENES=8;
+    private static final Random RANDOMIZER=new Random();
     private static final GenomeCreator GENOME_CREATOR=new GenomeCreator();
     private List<Integer> genes;
     private int dominatingGene=-1;
@@ -35,4 +33,10 @@ public class Genome {
         }
         return dominatingGene;
     }
+
+    public int getRandomGene()
+    {
+        return genes.get(RANDOMIZER.nextInt(NUM_OF_GENES));
+    }
+
 }
