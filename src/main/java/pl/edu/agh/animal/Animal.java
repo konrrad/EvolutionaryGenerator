@@ -7,7 +7,7 @@ public class Animal {
     private Orientation orientation;
     @Getter
     private int energy;
-    public final Genome genome;
+    public final Genome genome=new Genome();
 
 
     public boolean isAlive()

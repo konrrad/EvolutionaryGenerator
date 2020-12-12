@@ -26,11 +26,11 @@ public class Vector2 {
 
     //@TODO
     public boolean lessOrEqual(Vector2 other) {
-      return false;
+      return this.X<=other.X&&this.Y<=other.Y;
     }
 
     //@TODO
     public boolean biggerOrEqual(Vector2 other) {
-        return false;
+        return this.X>=other.X&&this.Y>=other.Y;
     }
 }

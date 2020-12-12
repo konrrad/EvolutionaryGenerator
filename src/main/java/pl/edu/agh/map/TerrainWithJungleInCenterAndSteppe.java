@@ -2,6 +2,7 @@ package pl.edu.agh.map;
 
 import pl.edu.agh.animal.Vector2;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TerrainWithJungleInCenterAndSteppe implements Terrain {
@@ -24,22 +25,25 @@ public class TerrainWithJungleInCenterAndSteppe implements Terrain {
         this.JUNGLE_HEIGHT= (int) (jungleToSteppeRatio*HEIGHT);
         this.JUNGLE_WIDTH= (int) (jungleToSteppeRatio*WIDTH);
         createZones();
-
-
     }
 
     private void createZones()
     {
+        zones=new ArrayList<>();
         final Vector2 jungleNE=new Vector2(center.X+(WIDTH-1)/2,center.Y+(HEIGHT-1)/2);
         final Vector2 jungleSW=new Vector2(center.X-(WIDTH-1)/2,center.Y-(HEIGHT-1)/2);
         zones.add(new Jungle(jungleNE,jungleSW));
         zones.add(new Steppe(northEastCorner,southWestCorner,jungleNE,jungleSW));
     }
 
+    public int getNumOfPlants()
+    {
+        return zones.stream().map(zone -> zone.plantsPositions.size()).reduce(0, Integer::sum);
+    }
+
     @Override
     public void plant() {
         zones.forEach(Zone::plantRandomly);
-
     }
 
     @Override
@@ -56,4 +60,6 @@ public class TerrainWithJungleInCenterAndSteppe implements Terrain {
     public boolean isGrown(final Vector2 position) {
         return zones.stream().anyMatch(zone -> zone.isGrown(position));
     }
+
+
 }
