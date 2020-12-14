@@ -9,4 +9,5 @@ public interface Terrain {
     void deletePlant(Vector2 position);
     boolean isInBorder(final Vector2 position);
     boolean isGrown(final Vector2 position);
+    int getEnergyForPosition(final Vector2 position);
 }

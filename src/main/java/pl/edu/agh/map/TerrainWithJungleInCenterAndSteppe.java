@@ -14,9 +14,11 @@ public class TerrainWithJungleInCenterAndSteppe implements Terrain {
     public final int JUNGLE_HEIGHT;
     private Jungle jungle;
     private Steppe steppe;
+    private final int plantEnergy;
 
 
-    public TerrainWithJungleInCenterAndSteppe(final int WIDTH, final int HEIGHT, double jungleToSteppeRatio) {
+    public TerrainWithJungleInCenterAndSteppe(final int WIDTH, final int HEIGHT, double jungleToSteppeRatio, int plantEnergy) {
+        this.plantEnergy=plantEnergy;
         this.WIDTH = WIDTH;
         this.HEIGHT = HEIGHT;
         this.southWestCorner = new Vector2(0, 0);
@@ -58,6 +60,11 @@ public class TerrainWithJungleInCenterAndSteppe implements Terrain {
     @Override
     public boolean isGrown(final Vector2 position) {
         return jungle.isGrown(position) || steppe.isGrown(position);
+    }
+
+    @Override
+    public int getEnergyForPosition(Vector2 position) {
+        return this.plantEnergy;
     }
 
 

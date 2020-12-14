@@ -16,7 +16,7 @@ public class TerrainWithJungleAndSteppeTest {
 
     @BeforeEach
     public void createTerrain() {
-        terrain = new TerrainWithJungleInCenterAndSteppe(WIDTH, HEIGHT, 0.5);
+        terrain = new TerrainWithJungleInCenterAndSteppe(WIDTH, HEIGHT, 0.5,3);
     }
 
 

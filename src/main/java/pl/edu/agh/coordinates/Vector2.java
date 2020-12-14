@@ -24,13 +24,16 @@ public class Vector2 {
         return Objects.hash(X, Y);
     }
 
-    //@TODO
     public boolean lessOrEqual(Vector2 other) {
-      return this.X<=other.X&&this.Y<=other.Y;
+        return this.X <= other.X && this.Y <= other.Y;
     }
 
-    //@TODO
     public boolean biggerOrEqual(Vector2 other) {
-        return this.X>=other.X&&this.Y>=other.Y;
+        return this.X >= other.X && this.Y >= other.Y;
+    }
+
+    public Vector2 add(Vector2 other)
+    {
+        return new Vector2(this.X+ other.X,this.Y+ other.Y);
     }
 }
