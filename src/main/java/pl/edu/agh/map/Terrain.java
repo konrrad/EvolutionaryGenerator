@@ -10,4 +10,5 @@ public interface Terrain {
     boolean isInBorder(final Vector2 position);
     boolean isGrown(final Vector2 position);
     int getEnergyForPosition(final Vector2 position);
+    Vector2 validatePosition(Vector2 position);
 }

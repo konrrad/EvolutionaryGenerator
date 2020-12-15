@@ -75,7 +75,7 @@ public class TerrainWithJungleAndSteppeTest {
 
     @Test
     public void isGrownTest() {
-        final int numOfPlants = 80;
+        final int numOfPlants = 40;
         plantPlants(numOfPlants, new HashSet<>());
         int numOfGrownFields = 0;
         for (int x = 0; x < terrain.WIDTH; x++) {
@@ -122,5 +122,15 @@ public class TerrainWithJungleAndSteppeTest {
 
         Vector2 position3 = new Vector2(49, 30);
         assertTrue(terrain.isInBorder(position3));
+    }
+
+    @Test
+    public void validatePositionTest()
+    {
+        assertEquals(new Vector2(0,0),terrain.validatePosition(new Vector2(WIDTH,HEIGHT)));
+        assertEquals(new Vector2(0,40),terrain.validatePosition(new Vector2(WIDTH,40)));
+        assertEquals(new Vector2(10,0),terrain.validatePosition(new Vector2(10,HEIGHT)));
+        assertEquals(new Vector2(10,HEIGHT-1),terrain.validatePosition(new Vector2(10,-1)));
+        assertEquals(new Vector2(WIDTH-1,20),terrain.validatePosition(new Vector2(-1,20)));
     }
 }

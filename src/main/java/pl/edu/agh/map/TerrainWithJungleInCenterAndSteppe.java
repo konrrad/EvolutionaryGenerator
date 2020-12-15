@@ -67,5 +67,10 @@ public class TerrainWithJungleInCenterAndSteppe implements Terrain {
         return this.plantEnergy;
     }
 
+    @Override
+    public Vector2 validatePosition(Vector2 position) {
+        return isInBorder(position)? position: new Vector2((position.X+WIDTH)%WIDTH,(position.Y+HEIGHT)%HEIGHT);
+    }
+
 
 }

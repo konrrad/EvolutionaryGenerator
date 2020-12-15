@@ -4,33 +4,6 @@ public enum Orientation {
     NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST;
 
     public Orientation next() {
-//        switch (this) {
-//            case SOUTHWEST -> {
-//                return WEST;
-//            }
-//            case SOUTHEAST -> {
-//                return SOUTH;
-//            }
-//            case NORTHWEST -> {
-//                return NORTH;
-//            }
-//            case NORTHEAST -> {
-//                return EAST;
-//            }
-//            case SOUTH -> {
-//                return SOUTHWEST;
-//            }
-//            case NORTH -> {
-//                return NORTHEAST;
-//            }
-//            case WEST -> {
-//                return NORTHWEST;
-//            }
-//            case EAST -> {
-//                return SOUTHEAST;
-//            }
-//        }
-//        throw new IllegalStateException();
         return Orientation.values()[(this.ordinal()+1)%values().length];
     }
 

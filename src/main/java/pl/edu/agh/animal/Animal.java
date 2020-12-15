@@ -12,8 +12,6 @@ import java.util.List;
 
 public class Animal {
 
-    @Getter @Setter
-    private Vector2 position;
     @Getter
     private Orientation orientation;
     @Getter
@@ -24,7 +22,6 @@ public class Animal {
     private final List<Birth> birthList=new ArrayList<>();
 
     public Animal(Vector2 position, Orientation orientation, int energy) {
-        this.position = position;
         this.orientation = orientation;
         this.energy = energy;
         this.genome=new Genome();
@@ -47,10 +44,6 @@ public class Animal {
         this.energy+=energy;
     }
 
-    public void setInitialPosition(Vector2 initialPosition)
-    {
-        this.position=initialPosition;
-    }
 
     public Animal copulate(Animal other)
     {
@@ -70,5 +63,9 @@ public class Animal {
     public Vector2 getPreferredDirectionVector()
     {
         return GeneToOrientatnionConverter.geneToOrientation(genome.getRandomGene()).toUnitVector();
+    }
+
+    public void takeEnergy(int moveEnergy) {
+        this.energy-=moveEnergy;
     }
 }

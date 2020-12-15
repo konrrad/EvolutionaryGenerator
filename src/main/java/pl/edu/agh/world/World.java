@@ -4,10 +4,13 @@ import com.google.common.collect.Multimap;
 import org.jetbrains.annotations.NotNull;
 import pl.edu.agh.animal.Animal;
 import pl.edu.agh.animal.EnergyComparator;
+import pl.edu.agh.coordinates.Orientation;
 import pl.edu.agh.coordinates.Vector2;
 import pl.edu.agh.map.Terrain;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,10 +18,13 @@ public class World {
     private final Multimap<Vector2, Animal> positionAnimalsMap;
     private final Terrain terrain;
     private final EnergyComparator energyComparator = new EnergyComparator();
+    private final List<Orientation> possibleOrientations=Arrays.asList(Orientation.values());
+    private final int moveEnergy;
 
-    public World(Multimap<Vector2, Animal> positionAnimalsMap, Terrain terrain) {
+    public World(Multimap<Vector2, Animal> positionAnimalsMap, Terrain terrain, int moveEnergy) {
         this.positionAnimalsMap = positionAnimalsMap;
         this.terrain = terrain;
+        this.moveEnergy=moveEnergy;
     }
 
     public void runEpoch() {
@@ -29,21 +35,45 @@ public class World {
         removeDead();
     }
 
-    //@TODO
     private void moveAnimals() {
-        positionAnimalsMap.values().forEach(animal -> {
-
-        });
+        for (Vector2 position : positionAnimalsMap.keySet()) {
+            Collection<Animal> animalsOnPosition=positionAnimalsMap.get(position);
+            animalsOnPosition.forEach(animal -> {
+                animal.increaseLivingTime();
+                animal.takeEnergy(moveEnergy);
+                final Vector2 preferredDirectionVector=animal.getPreferredDirectionVector();
+                final Vector2 newPosition=terrain.validatePosition(position.add(preferredDirectionVector));
+                positionAnimalsMap.remove(position,animal);
+                positionAnimalsMap.put(newPosition,animal);
+            });
+        }
     }
 
+    //@TODO
     private void copulateAnimals() {
-        positionAnimalsMap.keySet().stream()
-                .map(positionAnimalsMap::get)
-                .filter(animals -> animals.size()>=2)
-                .map(this::findTwoStrongest)
-                .forEach(animals -> {
-                    animals.get(0).copulate(animals.get(1));
-                });
+        for (Vector2 position : positionAnimalsMap.keySet()) {
+            Collection<Animal> animalsOnPosition=positionAnimalsMap.get(position);
+            if(animalsOnPosition.size()>=2)
+            {
+                List<Animal> parents=findTwoStrongest(animalsOnPosition);
+                final Animal father=parents.get(0);
+                final Animal mother=parents.get(1);
+                final Animal newBorn=father.copulate(mother);
+                positionAnimalsMap.put(findEmptyPositionAround(position),newBorn);
+            }
+        }
+    }
+
+    private Vector2 findEmptyPositionAround(Vector2 position)
+    {
+        Collections.shuffle(possibleOrientations);
+        return possibleOrientations.stream()
+                .map(Orientation::toUnitVector)
+                .map(vector2 -> vector2.add(position))
+                .filter(positionAround->!terrain.isGrown(positionAround))
+                .filter(postionAround->!positionAnimalsMap.containsKey(postionAround))
+                .findAny()
+                .orElse(position.add(possibleOrientations.get(0).toUnitVector()));
     }
 
     private void removeDead()
