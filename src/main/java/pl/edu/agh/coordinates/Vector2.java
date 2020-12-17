@@ -36,4 +36,12 @@ public class Vector2 {
     {
         return new Vector2(this.X+ other.X,this.Y+ other.Y);
     }
+
+    @Override
+    public String toString() {
+        return "Vector2{" +
+                "X=" + X +
+                ", Y=" + Y +
+                '}';
+    }
 }

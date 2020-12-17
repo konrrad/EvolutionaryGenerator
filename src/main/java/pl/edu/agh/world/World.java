@@ -1,5 +1,6 @@
 package pl.edu.agh.world;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.jetbrains.annotations.NotNull;
 import pl.edu.agh.animal.Animal;
@@ -8,16 +9,13 @@ import pl.edu.agh.coordinates.Orientation;
 import pl.edu.agh.coordinates.Vector2;
 import pl.edu.agh.map.Terrain;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class World {
     private final Multimap<Vector2, Animal> positionAnimalsMap;
     private final Terrain terrain;
-    private final EnergyComparator energyComparator = new EnergyComparator();
+    private final Comparator<Animal> energyComparator = new EnergyComparator();
     private final List<Orientation> possibleOrientations=Arrays.asList(Orientation.values());
     private final int moveEnergy;
 
@@ -58,11 +56,14 @@ public class World {
                 List<Animal> parents=findTwoStrongest(animalsOnPosition);
                 final Animal father=parents.get(0);
                 final Animal mother=parents.get(1);
+                if(!father.canCopulate()||!mother.canCopulate()) return;
                 final Animal newBorn=father.copulate(mother);
                 positionAnimalsMap.put(findEmptyPositionAround(position),newBorn);
             }
         }
     }
+
+
 
     private Vector2 findEmptyPositionAround(Vector2 position)
     {
@@ -71,40 +72,52 @@ public class World {
                 .map(Orientation::toUnitVector)
                 .map(vector2 -> vector2.add(position))
                 .filter(positionAround->!terrain.isGrown(positionAround))
-                .filter(postionAround->!positionAnimalsMap.containsKey(postionAround))
+                .filter(positionAround->!positionAnimalsMap.containsKey(positionAround))
+                .map(terrain::validatePosition)
                 .findAny()
                 .orElse(position.add(possibleOrientations.get(0).toUnitVector()));
     }
 
     private void removeDead()
     {
+        Multimap<Vector2,Animal> toRemove= ArrayListMultimap.create();
         for (Vector2 position : positionAnimalsMap.keySet()) {
             Collection<Animal> animalsOnPosition = positionAnimalsMap.get(position);
             animalsOnPosition.forEach(animal -> {
-                if(!animal.isAlive()) positionAnimalsMap.remove(position,animal);
+                if(!animal.isAlive()) toRemove.put(position,animal);
             });
         }
+        toRemove.keySet().forEach(vector2 -> {
+            toRemove.get(vector2).forEach(animal -> positionAnimalsMap.remove(vector2,animal));
+        });
     }
 
     private List<Animal> findTwoStrongest(final Collection<Animal> animals) {
-        return animals.stream().sorted(energyComparator).skip(animals.size() - 2).collect(Collectors.toUnmodifiableList());
+        return animals.stream().sorted(energyComparator).skip(animals.size() - 2).collect(Collectors.toList());
     }
 
     private void feedAnimals() {
         for (Vector2 position : positionAnimalsMap.keySet()) {
             Collection<Animal> animalsOnPosition = positionAnimalsMap.get(position);
             if(!animalsOnPosition.isEmpty())
-                feedTheStrongest(animalsOnPosition, terrain.getEnergyForPosition(position));
+                feedStrongest(animalsOnPosition, terrain.getEnergyForPosition(position));
                 terrain.deletePlant(position);
         }
     }
 
-    private void feedTheStrongest(final Collection<Animal> animals, final int energy) {
-        findTheStrongest(animals).eat(energy);
+    private void feedStrongest(final Collection<Animal> animals, final int energy) {
+        Collection<Animal> strongestAnimals=findStrongest(animals);
+        strongestAnimals.forEach(animal->animal.eat(energy/strongestAnimals.size()));
     }
 
-    private Animal findTheStrongest(@NotNull final Collection<Animal> animals) {
-        return animals.stream().max(energyComparator).orElseThrow(IllegalArgumentException::new);
+    private List<Animal> findStrongest(@NotNull final Collection<Animal> animals) {
+        final int maxEnergy=findMaximumEnergy(animals);
+        return animals.stream().filter(animal -> animal.getEnergy()==maxEnergy).collect(Collectors.toList());
+    }
+
+    private int findMaximumEnergy(@NotNull final Collection<Animal> animals)
+    {
+        return animals.stream().max(energyComparator).map(Animal::getEnergy).orElseThrow(IllegalArgumentException::new);
     }
 
     private void plant() {

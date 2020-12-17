@@ -12,6 +12,7 @@ import java.util.List;
 
 public class Animal {
 
+    private static int MINIMUM_REPRODUCTION_ENERGY;
     @Getter
     private Orientation orientation;
     @Getter
@@ -21,7 +22,8 @@ public class Animal {
     public final Genome genome;
     private final List<Birth> birthList=new ArrayList<>();
 
-    public Animal(Vector2 position, Orientation orientation, int energy) {
+    public Animal(Orientation orientation, int energy,int minimum_copulation_energy) {
+        MINIMUM_REPRODUCTION_ENERGY=minimum_copulation_energy;
         this.orientation = orientation;
         this.energy = energy;
         this.genome=new Genome();
@@ -67,5 +69,10 @@ public class Animal {
 
     public void takeEnergy(int moveEnergy) {
         this.energy-=moveEnergy;
+    }
+
+    public boolean canCopulate()
+    {
+        return this.energy>=MINIMUM_REPRODUCTION_ENERGY;
     }
 }
