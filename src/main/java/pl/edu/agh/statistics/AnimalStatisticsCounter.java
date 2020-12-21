@@ -3,6 +3,8 @@ package pl.edu.agh.statistics;
 import pl.edu.agh.model.animal.Animal;
 import pl.edu.agh.model.world.World;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;

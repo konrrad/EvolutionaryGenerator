@@ -15,8 +15,7 @@ import pl.edu.agh.model.config.ConfigProvider;
 import pl.edu.agh.model.config.JSONConfigProvider;
 import pl.edu.agh.model.world.World;
 import pl.edu.agh.model.world.WorldCreator;
-import pl.edu.agh.statistics.AnimalStatisticsCounter;
-import pl.edu.agh.statistics.StatisticsCounter;
+import pl.edu.agh.statistics.*;
 import pl.edu.agh.view.WorldGridPane;
 
 import java.io.File;
@@ -54,6 +53,7 @@ public class GeneratorController {
     private WorldGridPane gridPane = new WorldGridPane(world, jsonConfigProvider.getWidth(), jsonConfigProvider.getHeight());
     private boolean running = false;
     private TimerTask timerTask;
+    private StatisticsRepository statisticsRepository=new AnimalStatisticsRepository();
 
 
     public GeneratorController(Stage primaryStage) {
@@ -117,12 +117,19 @@ public class GeneratorController {
     }
 
     private void updateStatistics() {
-        this.livingAnimalsLabel.setText(String.format("Living Animals: %d", statisticsCounter.getNumberOfLivingAnimals()));
-        plantsLabel.setText(String.format("Plants: %d", statisticsCounter.getNumberOfPlants()));
-        dominatingGenomeLabel.setText(String.format("Dominating Genome: %d", statisticsCounter.getDominatingGenome()));
-        meanEnergyLivingLabel.setText(String.format("Mean Energy Living: %.02f", statisticsCounter.getMeanEnergyForLiving()));
-        meanLivingTimeLabel.setText(String.format("Mean Living Time Dead: %.02f", statisticsCounter.getMeanLivingTimeForDead()));
-        meanChildrenLabel.setText(String.format("Mean Children: %.02f", statisticsCounter.getMeanChildren()));
+        Epoch epoch=new Epoch(statisticsCounter.getNumberOfLivingAnimals(),
+                statisticsCounter.getNumberOfPlants(),
+                statisticsCounter.getDominatingGenome(),
+                statisticsCounter.getMeanEnergyForLiving(),
+                statisticsCounter.getMeanLivingTimeForDead(),
+                statisticsCounter.getMeanChildren());
+        statisticsRepository.insert(epoch);
+        livingAnimalsLabel.setText(String.format("Living Animals: %d", epoch.getNumberOfLivingAnimals()));
+        plantsLabel.setText(String.format("Plants: %d", epoch.getNumberOfPlants()));
+        dominatingGenomeLabel.setText(String.format("Dominating Genome: %d", epoch.getDominatingGenome()));
+        meanEnergyLivingLabel.setText(String.format("Mean Energy Living: %.02f", epoch.getMeanEnergyForLiving()));
+        meanLivingTimeLabel.setText(String.format("Mean Living Time Dead: %.02f", epoch.getMeanLivingTimeForDead()));
+        meanChildrenLabel.setText(String.format("Mean Children: %.02f", epoch.getMeanChildren()));
     }
 
     public void startToggle(ActionEvent actionEvent) {
