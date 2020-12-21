@@ -21,6 +21,8 @@ public class Animal {
     private int livingTime=0;
     public final Genome genome;
     private final List<Birth> birthList=new ArrayList<>();
+    @Getter
+    private int deathTime;
 
     public Animal(Orientation orientation, int energy,int minimum_copulation_energy) {
         MINIMUM_REPRODUCTION_ENERGY=minimum_copulation_energy;
@@ -39,6 +41,11 @@ public class Animal {
     public boolean isAlive()
     {
         return energy>0;
+    }
+
+    public void die(int epoch)
+    {
+        this.deathTime=epoch;
     }
 
     public void eat(int energy)
@@ -81,14 +88,11 @@ public class Animal {
         return this.energy>=MINIMUM_REPRODUCTION_ENERGY;
     }
 
-    @Override
-    public String toString() {
-        return "Animal{" +
-                "orientation=" + orientation +
-                ", energy=" + energy +
-                ", livingTime=" + livingTime +
-                ", genome=" + genome +
-                ", birthList=" + birthList +
-                '}';
+    public int getNumberOfDescendants()
+    {
+        if(birthList.size()==0) return 0;
+        return this.birthList.size()+birthList.stream().mapToInt(birth->birth.animal.getNumberOfDescendants()).sum();
     }
+
+
 }

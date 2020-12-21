@@ -4,9 +4,12 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -20,8 +23,12 @@ import pl.edu.agh.view.WorldGridPane;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GeneratorController {
 
@@ -47,6 +54,12 @@ public class GeneratorController {
     public Label meanLivingTimeLabel;
     @FXML
     public Label meanChildrenLabel;
+    @FXML
+    public Button detailsButton;
+    @FXML
+    public TextField numOfEpochsField;
+    @FXML
+    public Label numOfEpochsPassed;
 
     private Timer timer;
     private Stage primaryStage;
@@ -58,16 +71,6 @@ public class GeneratorController {
 
     public GeneratorController(Stage primaryStage) {
         this.primaryStage = primaryStage;
-//        listView.setCellFactory(lv->new ListCell<Animal>(){
-//            @Override
-//            protected void updateItem(Animal item, boolean empty) {
-//                super.updateItem(item, empty);
-//                if(!empty)
-//                {
-//                    setText(item.getEnergy())
-//                }
-//            }
-//        });
     }
 
     public GeneratorController() {
@@ -130,14 +133,50 @@ public class GeneratorController {
         meanEnergyLivingLabel.setText(String.format("Mean Energy Living: %.02f", epoch.getMeanEnergyForLiving()));
         meanLivingTimeLabel.setText(String.format("Mean Living Time Dead: %.02f", epoch.getMeanLivingTimeForDead()));
         meanChildrenLabel.setText(String.format("Mean Children: %.02f", epoch.getMeanChildren()));
+        numOfEpochsPassed.setText(String.format("Epochs passed: %d",world.getEpochsPassed()));
     }
 
     public void startToggle(ActionEvent actionEvent) {
         running = !running;
         if (!running) {
+            detailsButton.setDisable(true);
             initTaskAndTimer();
             timer.scheduleAtFixedRate(timerTask, DELAY, DELAY);
         } else
+        {
             timer.cancel();
+            detailsButton.setDisable(false);
+        }
+
+    }
+
+    public void openDetailsView(ActionEvent actionEvent) {
+        Parent root;
+        try {
+            FXMLLoader loader=new FXMLLoader(GeneratorController.class
+                    .getResource("/DetailsView.fxml"));
+            root = loader.load();
+            DetailsController detailsController=loader.getController();
+            Collection<Animal> animalsForStatistics= Stream.concat(world.getPositionAnimalsMap().values().stream(),world.getDeadAnimals().stream()).collect(Collectors.toList());
+            detailsController.init(animalsForStatistics);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root, 1000, 600));
+            stage.show();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void dumpToFile(ActionEvent actionEvent) {
+        try
+        {
+            statisticsRepository.dumpToFileAfterEpochs(Integer.parseInt(numOfEpochsField.getText()));
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
     }
 }

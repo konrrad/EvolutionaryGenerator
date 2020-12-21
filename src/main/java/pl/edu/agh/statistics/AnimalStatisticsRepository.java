@@ -1,6 +1,5 @@
 package pl.edu.agh.statistics;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.FileWriter;
@@ -25,59 +24,51 @@ public class AnimalStatisticsRepository implements StatisticsRepository {
     }
 
     private void dumpToFile(List<Epoch> epochList) {
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.put("LivingAnimals",calculateAvgLivingAnimals(epochList));
-        jsonObject.put("NumOfPlants",calculateAvgNumOfPlants(epochList));
-        jsonObject.put("DominatingGenome",calculateDominatingGenome(epochList));
-        jsonObject.put("AVGEnergy",calculateAvgEnergy(epochList));
-        jsonObject.put("MeanLivingTimeForDead",calculateMeanLivingTime(epochList));
-        jsonObject.put("MeanChildren",calculateMeanChildren(epochList));
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("LivingAnimals", calculateAvgLivingAnimals(epochList));
+        jsonObject.put("NumOfPlants", calculateAvgNumOfPlants(epochList));
+        jsonObject.put("DominatingGenome", calculateDominatingGenome(epochList));
+        jsonObject.put("AVGEnergy", calculateAvgEnergy(epochList));
+        jsonObject.put("MeanLivingTimeForDead", calculateMeanLivingTime(epochList));
+        jsonObject.put("MeanChildren", calculateMeanChildren(epochList));
 
-        try(FileWriter fw=new FileWriter("stats.json")) {
+        try (FileWriter fw = new FileWriter("stats.json")) {
             fw.write(jsonObject.toJSONString());
             fw.flush();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private Double calculateAvgLivingAnimals(List<Epoch> epochList)
-    {
+    private Double calculateAvgLivingAnimals(List<Epoch> epochList) {
         return epochList.stream().mapToDouble(Epoch::getNumberOfLivingAnimals)
                 .average().orElse(0);
     }
 
-    private Double calculateAvgNumOfPlants(List<Epoch> epochList)
-    {
+    private Double calculateAvgNumOfPlants(List<Epoch> epochList) {
         return epochList.stream().mapToDouble(Epoch::getNumberOfPlants)
                 .average().orElse(0);
     }
 
-    private Double calculateDominatingGenome(List<Epoch> epochList)
-    {
+    private Double calculateDominatingGenome(List<Epoch> epochList) {
         return epochList.stream().mapToDouble(Epoch::getDominatingGenome)
                 .average().orElse(0);
     }
 
-    private Double calculateAvgEnergy(List<Epoch> epochList)
-    {
+    private Double calculateAvgEnergy(List<Epoch> epochList) {
         return epochList.stream().mapToDouble(Epoch::getMeanEnergyForLiving)
                 .average().orElse(0);
     }
 
-    private Double calculateMeanLivingTime(List<Epoch> epochList)
-    {
+    private Double calculateMeanLivingTime(List<Epoch> epochList) {
         return epochList.stream().mapToDouble(Epoch::getMeanLivingTimeForDead)
                 .average().orElse(0);
     }
 
-    private Double calculateMeanChildren(List<Epoch> epochList)
-    {
+    private Double calculateMeanChildren(List<Epoch> epochList) {
         return epochList.stream().mapToDouble(Epoch::getMeanChildren)
                 .average().orElse(0);
     }
-
 
 
 }

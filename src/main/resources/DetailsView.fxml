@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="pl.edu.agh.controller.DetailsController"
+            prefHeight="800.0" prefWidth="800.0">
+    <left>
+        <ListView fx:id="animalsListView"></ListView>
+    </left>
+    <center>
+        <VBox prefWidth="800" alignment="CENTER">
+            <Label text="Animal details:"/>
+            <Label fx:id="nameLabel"/>
+            <Label fx:id="genomeLabel"/>
+            <Label fx:id="dominatingGene"/>
+            <Label fx:id="childrenLabel"/>
+            <Label fx:id="descendantsLabel"/>
+            <Label fx:id="deathTimeLabel"/>
+
+        </VBox>
+    </center>
+    <bottom>
+
+    </bottom>
+
+</BorderPane>

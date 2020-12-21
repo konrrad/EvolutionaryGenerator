@@ -39,4 +39,8 @@ public class Genome {
         return genes.get(RANDOMIZER.nextInt(NUM_OF_GENES));
     }
 
+    @Override
+    public String toString() {
+        return genes.toString();
+    }
 }

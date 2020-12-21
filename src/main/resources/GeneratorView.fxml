@@ -4,11 +4,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
 <BorderPane xmlns="http://javafx.com/javafx/8.0.40"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.controller.GeneratorController">
     <top>
         <VBox spacing="5">
             <Button fx:id="startButton" onAction="#startToggle" text="START/STOP" alignment="CENTER"></Button>
+            <Button fx:id="detailsButton" onAction="#openDetailsView" disable="true" text="DETAILS" alignment="CENTER"></Button>
         </VBox>
 
     </top>
@@ -17,12 +20,18 @@
     </center>
     <bottom>
         <VBox>
+            <Label fx:id="numOfEpochsPassed"></Label>
             <Label fx:id="livingAnimalsLabel"></Label>
             <Label fx:id="plantsLabel"></Label>
             <Label fx:id="dominatingGenomeLabel"></Label>
             <Label fx:id="meanEnergyLivingLabel"></Label>
             <Label fx:id="meanLivingTimeLabel"></Label>
             <Label fx:id="meanChildrenLabel"></Label>
+            <HBox>
+                <Label text="Dump to file after n-epochs:"/>
+                <TextField fx:id="numOfEpochsField"></TextField>
+                <Button text="DUMP" onAction="#dumpToFile"></Button>
+            </HBox>
         </VBox>
     </bottom>
 

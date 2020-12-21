@@ -23,6 +23,8 @@ public class World {
     private final Comparator<Animal> energyComparator = new EnergyComparator();
     private final List<Orientation> possibleOrientations = Arrays.asList(Orientation.values());
     private final int moveEnergy;
+    @Getter
+    private int epochsPassed=0;
 
     public World(Multimap<Vector2, Animal> positionAnimalsMap, Terrain terrain, int moveEnergy) {
         this.positionAnimalsMap = positionAnimalsMap;
@@ -36,6 +38,7 @@ public class World {
         feedAnimals();
         copulateAnimals();
         removeDead();
+        this.epochsPassed++;
     }
 
     private void moveAnimals() {
@@ -90,7 +93,10 @@ public class World {
         for (Vector2 position : positionAnimalsMap.keySet()) {
             Collection<Animal> animalsOnPosition = positionAnimalsMap.get(position);
             animalsOnPosition.forEach(animal -> {
-                if (!animal.isAlive()) toRemove.put(position, animal);
+                if (!animal.isAlive()) {
+                    toRemove.put(position, animal);
+                    animal.die(this.epochsPassed);
+                }
             });
         }
         toRemove.keySet().forEach(vector2 -> {

@@ -30,7 +30,7 @@ public class WorldCreator {
         for (int i = 0; i < configProvider.getNumberOfAnimals(); i++) {
             map.put(
                     new Vector2(configProvider.getWidth()/2,configProvider.getHeight()/2),
-                    new Animal(Orientation.getRandomOrientation(),configProvider.getStartEnergy(),configProvider.getStartEnergy()));
+                    new Animal(Orientation.getRandomOrientation(),configProvider.getStartEnergy(),1));
         }
         System.out.println("ME"+configProvider.getMoveEnergy());
         return new World(map,terrain,configProvider.getMoveEnergy());
