@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class JSONConfigProvider implements ConfigProvider {
     private final JSONParser jsonParser;
+    private int minimumCopulationEnergy;
     private int width;
     private int height;
     private int startEnergy;
@@ -31,6 +32,7 @@ public class JSONConfigProvider implements ConfigProvider {
             this.plantEnergy= ((Long) obj.get("plantEnergy")).intValue();
             this.jungleRatio= (Double) obj.get("jungleRatio");
             this.numberOfAnimals= ((Long) obj.get("numberOfAnimals")).intValue();
+            this.minimumCopulationEnergy=((Long) obj.get("minimumCopulationEnergy")).intValue();
         } catch (ParseException | IOException e)
         {
             e.printStackTrace();
@@ -70,5 +72,10 @@ public class JSONConfigProvider implements ConfigProvider {
     @Override
     public int getNumberOfAnimals() {
         return this.numberOfAnimals;
+    }
+
+    @Override
+    public int getMinimumCopulationEnergy() {
+        return this.minimumCopulationEnergy;
     }
 }

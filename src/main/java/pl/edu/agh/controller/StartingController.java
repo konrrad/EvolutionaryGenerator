@@ -40,7 +40,7 @@ public class StartingController {
     public void newSimulation() {
         Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader(GeneratorController.class
+            FXMLLoader loader = new FXMLLoader(StartingController.class
                     .getResource("/GeneratorView.fxml"));
             root = loader.load();
             GeneratorController generatorController = loader.getController();

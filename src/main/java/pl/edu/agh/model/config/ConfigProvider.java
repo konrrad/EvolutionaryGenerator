@@ -8,5 +8,6 @@ public interface ConfigProvider {
     int getPlantEnergy();
     double getJungleRatio();
     int getNumberOfAnimals();
+    int getMinimumCopulationEnergy();
 
 }
