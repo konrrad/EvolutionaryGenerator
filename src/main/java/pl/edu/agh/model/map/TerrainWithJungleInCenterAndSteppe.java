@@ -1,6 +1,6 @@
-package pl.edu.agh.map;
+package pl.edu.agh.model.map;
 
-import pl.edu.agh.coordinates.Vector2;
+import pl.edu.agh.model.coordinates.Vector2;
 
 import java.util.Set;
 
@@ -64,7 +64,9 @@ public class TerrainWithJungleInCenterAndSteppe implements Terrain {
 
     @Override
     public int getEnergyForPosition(Vector2 position) {
-        return this.plantEnergy;
+        if(isGrown(position))
+            return this.plantEnergy;
+        return 0;
     }
 
     @Override

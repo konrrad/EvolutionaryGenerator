@@ -1,4 +1,4 @@
-package pl.edu.agh.config;
+package pl.edu.agh.model.config;
 
 public interface ConfigProvider {
     int getWidth();

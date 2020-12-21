@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.edu.agh.coordinates.Vector2;
-import pl.edu.agh.map.TerrainWithJungleInCenterAndSteppe;
+import pl.edu.agh.model.coordinates.Vector2;
+import pl.edu.agh.model.map.TerrainWithJungleInCenterAndSteppe;
 
 import java.util.Arrays;
 import java.util.HashSet;

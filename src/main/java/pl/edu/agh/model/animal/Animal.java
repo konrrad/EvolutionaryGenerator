@@ -1,17 +1,17 @@
-package pl.edu.agh.animal;
+package pl.edu.agh.model.animal;
 
 import lombok.Getter;
-import lombok.Setter;
-import pl.edu.agh.animal.genome.GeneToOrientatnionConverter;
-import pl.edu.agh.animal.genome.Genome;
-import pl.edu.agh.coordinates.Orientation;
-import pl.edu.agh.coordinates.Vector2;
+import pl.edu.agh.model.animal.genome.GeneToOrientatnionConverter;
+import pl.edu.agh.model.animal.genome.Genome;
+import pl.edu.agh.model.coordinates.Orientation;
+import pl.edu.agh.model.coordinates.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Animal {
 
+    @Getter
     private static int MINIMUM_REPRODUCTION_ENERGY;
     @Getter
     private Orientation orientation;
@@ -50,9 +50,9 @@ public class Animal {
     public Animal copulate(Animal other)
     {
         final Animal newborn=
-                new Animal(this.orientation, (int) (this.energy*0.25+ other.energy*0.25),new Genome(this.genome,other.genome));
-        this.energy*=0.75;
-        other.energy*=0.75;
+                new Animal(this.orientation, (int) ((float)this.energy*0.25+ (float)other.energy*0.25),new Genome(this.genome,other.genome));
+        this.energy= (int) ((float)this.energy*0.75);
+        other.energy= (int) ((float)this.energy*0.75);
         birthList.add(new Birth(newborn,livingTime));
         return newborn;
     }
@@ -74,5 +74,16 @@ public class Animal {
     public boolean canCopulate()
     {
         return this.energy>=MINIMUM_REPRODUCTION_ENERGY;
+    }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "orientation=" + orientation +
+                ", energy=" + energy +
+                ", livingTime=" + livingTime +
+                ", genome=" + genome +
+                ", birthList=" + birthList +
+                '}';
     }
 }

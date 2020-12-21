@@ -1,4 +1,4 @@
-package pl.edu.agh.animal.genome;
+package pl.edu.agh.model.animal.genome;
 
 import java.util.*;
 import java.util.stream.Collectors;

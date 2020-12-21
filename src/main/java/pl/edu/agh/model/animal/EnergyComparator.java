@@ -1,4 +1,4 @@
-package pl.edu.agh.animal;
+package pl.edu.agh.model.animal;
 
 import java.util.Comparator;
 

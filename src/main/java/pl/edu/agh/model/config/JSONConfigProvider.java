@@ -1,16 +1,14 @@
-package pl.edu.agh.config;
+package pl.edu.agh.model.config;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class JSONConfigProvider implements ConfigProvider {
-
-
-    private final String filename;
     private final JSONParser jsonParser;
     private int width;
     private int height;
@@ -20,8 +18,7 @@ public class JSONConfigProvider implements ConfigProvider {
     private double jungleRatio;
     private int numberOfAnimals;
 
-    public JSONConfigProvider(String filename) {
-        this.filename=filename;
+    public JSONConfigProvider(File filename) {
         this.jsonParser=new JSONParser();
         try
         {

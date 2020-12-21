@@ -1,4 +1,4 @@
-package pl.edu.agh.animal;
+package pl.edu.agh.model.animal;
 
 public class Birth {
     public final Animal animal;

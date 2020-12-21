@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Test;
-import pl.edu.agh.config.JSONConfigProvider;
+import pl.edu.agh.model.config.JSONConfigProvider;
+
+import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -8,7 +10,7 @@ public class JSONConfigProviderTest {
     @Test
     public void readingTest()
     {
-        JSONConfigProvider jsonConfigProvider=new JSONConfigProvider(getClass().getResource("parameters.json").getFile());
+        JSONConfigProvider jsonConfigProvider=new JSONConfigProvider(new File(getClass().getResource("parameters.json").getFile()));
         assertEquals(100,jsonConfigProvider.getHeight());
         assertEquals(100,jsonConfigProvider.getWidth());
         assertEquals(0.75,jsonConfigProvider.getJungleRatio());

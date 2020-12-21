@@ -1,4 +1,4 @@
-package pl.edu.agh.coordinates;
+package pl.edu.agh.model.coordinates;
 
 import java.util.Objects;
 

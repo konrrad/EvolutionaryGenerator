@@ -1,7 +1,11 @@
-package pl.edu.agh.coordinates;
+package pl.edu.agh.model.coordinates;
+
+import java.util.Random;
 
 public enum Orientation {
     NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST;
+    public static final Random random= new Random();
+
 
     public Orientation next() {
         return Orientation.values()[(this.ordinal()+1)%values().length];
@@ -38,5 +42,10 @@ public enum Orientation {
             }
         }
         throw new IllegalStateException();
+    }
+
+    public static Orientation getRandomOrientation()
+    {
+        return values()[random.nextInt(values().length)];
     }
 }

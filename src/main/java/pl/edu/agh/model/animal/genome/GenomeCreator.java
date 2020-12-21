@@ -1,11 +1,11 @@
-package pl.edu.agh.animal.genome;
+package pl.edu.agh.model.animal.genome;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static pl.edu.agh.animal.genome.Genome.NUM_OF_DISTINCT_GENES;
-import static pl.edu.agh.animal.genome.Genome.NUM_OF_GENES;
+import static pl.edu.agh.model.animal.genome.Genome.NUM_OF_DISTINCT_GENES;
+import static pl.edu.agh.model.animal.genome.Genome.NUM_OF_GENES;
 
 public class GenomeCreator {
     public static final Random RANDOMIZER = new Random();

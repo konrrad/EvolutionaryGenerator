@@ -1,6 +1,6 @@
-package pl.edu.agh.animal.genome;
+package pl.edu.agh.model.animal.genome;
 
-import pl.edu.agh.coordinates.Orientation;
+import pl.edu.agh.model.coordinates.Orientation;
 
 public class GeneToOrientatnionConverter {
     public static Orientation geneToOrientation(int gene)

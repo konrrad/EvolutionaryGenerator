@@ -2,11 +2,11 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.junit.jupiter.api.Test;
 import org.mockito.AdditionalAnswers;
-import pl.edu.agh.animal.Animal;
-import pl.edu.agh.coordinates.Orientation;
-import pl.edu.agh.coordinates.Vector2;
-import pl.edu.agh.map.Terrain;
-import pl.edu.agh.world.World;
+import pl.edu.agh.model.animal.Animal;
+import pl.edu.agh.model.coordinates.Orientation;
+import pl.edu.agh.model.coordinates.Vector2;
+import pl.edu.agh.model.map.Terrain;
+import pl.edu.agh.model.world.World;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
