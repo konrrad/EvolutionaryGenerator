@@ -2,9 +2,7 @@ package pl.edu.agh.view;
 
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -16,7 +14,8 @@ import pl.edu.agh.model.world.World;
 import java.util.Map;
 
 public class WorldGridPane extends GridPane {
-    public static final int SIZE = 50;
+    public static final int SIZE = 10;
+    public static final int RADIUS=10;
     public static final ColumnConstraints COLUMN_CONSTRAINTS = new ColumnConstraints();
     public static final RowConstraints ROW_CONSTRAINTS = new RowConstraints();
 
@@ -38,7 +37,9 @@ public class WorldGridPane extends GridPane {
         this.height = height;
         this.world = world;
         this.terrain = world.getTerrain();
-        this.setGridLinesVisible(true);
+//        this.setGridLinesVisible(true);
+        this.setBorder(new Border(new BorderStroke(Color.BLACK,
+                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         setRows(height);
         setCols(width);
         addPlants();
@@ -50,8 +51,8 @@ public class WorldGridPane extends GridPane {
     private void addAnimals() {
         var positionAnimalMap = world.getPositionAnimalsMap();
         for (Map.Entry<Vector2, Animal> entry : positionAnimalMap.entries()) {
-            Circle circle = new Circle(10);
-            System.out.println(entry.getValue());
+            Circle circle = new Circle(RADIUS);
+            circle.autosize();
             circle.setFill(intToColorMapper.mapPercentToColor((float)entry.getValue().getEnergy()/(float)Animal.getMINIMUM_REPRODUCTION_ENERGY()));
             add(circle, entry.getKey().X, entry.getKey().Y);
             setHalignment(circle, HPos.CENTER);
@@ -83,16 +84,19 @@ public class WorldGridPane extends GridPane {
     }
 
     private void addPlant(int row, int col) {
-        this.add(new Rectangle(SIZE, SIZE, Color.GREEN), col, row);
+        Rectangle rect=new Rectangle(SIZE,SIZE,Color.color(0,1,0,0.9));
+        setHalignment(rect, HPos.CENTER);
+        setValignment(rect, VPos.CENTER);
+        this.add(rect, col, row);
     }
 
 
     public void update() {
-        setGridLinesVisible(false);
+//        setGridLinesVisible(false);
         getChildren().clear();
         addPlants();
         addAnimals();
-        setGridLinesVisible(true);
+//        setGridLinesVisible(true);
     }
 
 
