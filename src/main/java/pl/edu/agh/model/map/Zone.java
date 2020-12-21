@@ -19,6 +19,11 @@ public abstract class Zone {
         this.plantsPositions = new HashSet<>();
     }
 
+    public int getNumberOfPlants()
+    {
+        return plantsPositions.size();
+    }
+
     public boolean isInBorders(Vector2 position)
     {
         return position.lessOrEqual(northEastCorner)&&position.biggerOrEqual(southWestCorner);

@@ -74,5 +74,10 @@ public class TerrainWithJungleInCenterAndSteppe implements Terrain {
         return isInBorder(position)? position: new Vector2((position.X+WIDTH)%WIDTH,(position.Y+HEIGHT)%HEIGHT);
     }
 
+    @Override
+    public int getNumberOfPlants() {
+        return jungle.getNumberOfPlants()+steppe.getNumberOfPlants();
+    }
+
 
 }

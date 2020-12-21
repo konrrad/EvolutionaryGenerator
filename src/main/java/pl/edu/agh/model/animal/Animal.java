@@ -46,6 +46,11 @@ public class Animal {
         this.energy+=energy;
     }
 
+    public int getNumberOfChildren()
+    {
+        return this.birthList.size();
+    }
+
 
     public Animal copulate(Animal other)
     {

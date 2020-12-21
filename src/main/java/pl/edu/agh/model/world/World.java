@@ -18,6 +18,8 @@ public class World {
     private final Multimap<Vector2, Animal> positionAnimalsMap;
     @Getter
     private final Terrain terrain;
+    @Getter
+    private final List<Animal> deadAnimals=new LinkedList<>();
     private final Comparator<Animal> energyComparator = new EnergyComparator();
     private final List<Orientation> possibleOrientations = Arrays.asList(Orientation.values());
     private final int moveEnergy;
@@ -92,8 +94,13 @@ public class World {
             });
         }
         toRemove.keySet().forEach(vector2 -> {
-            toRemove.get(vector2).forEach(animal -> positionAnimalsMap.remove(vector2, animal));
+            toRemove.get(vector2).forEach(
+                    animal -> {
+                        positionAnimalsMap.remove(vector2, animal);
+                        deadAnimals.add(animal);
+            });
         });
+
     }
 
     private List<Animal> findTwoStrongest(final Collection<Animal> animals) {

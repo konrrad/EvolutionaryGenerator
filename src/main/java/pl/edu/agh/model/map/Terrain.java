@@ -11,4 +11,4 @@ public interface Terrain {
     boolean isGrown(final Vector2 position);
     int getEnergyForPosition(final Vector2 position);
     Vector2 validatePosition(Vector2 position);
-}
+    int getNumberOfPlants();}

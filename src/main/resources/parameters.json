@@ -3,6 +3,6 @@
   "height": 4,
   "startEnergy": 10,
   "moveEnergy": 2,
-  "plantEnergy": 0,
+  "plantEnergy": 4,
   "jungleRatio": 0.1
 }
