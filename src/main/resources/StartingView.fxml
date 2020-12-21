@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="pl.edu.agh.controller.StartingController"
+            prefHeight="800.0" prefWidth="800.0">
+    <center>
+        <Button text="NEW SIMULATION" onAction="#newSimulation"/>
+    </center>
+
+</BorderPane>

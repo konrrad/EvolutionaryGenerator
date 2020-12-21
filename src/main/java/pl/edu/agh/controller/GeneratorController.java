@@ -69,9 +69,6 @@ public class GeneratorController {
     private StatisticsRepository statisticsRepository=new AnimalStatisticsRepository();
 
 
-    public GeneratorController(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
 
     public GeneratorController() {
     }
@@ -87,7 +84,8 @@ public class GeneratorController {
         };
     }
 
-    public void initRootLayout() {
+    public void initRootLayout(Stage primaryStage) {
+        this.primaryStage=primaryStage;
         this.primaryStage.setTitle("Generator");
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(GeneratorController.class
