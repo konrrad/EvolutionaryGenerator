@@ -2,9 +2,17 @@
 
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-<BorderPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40"
+<?import javafx.scene.control.Button?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.40"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.controller.GeneratorController">
+    <top>
+        <VBox spacing="5">
+            <Button fx:id="startButton" onAction="#startToggle" text="START/STOP" alignment="CENTER"></Button>
+        </VBox>
+
+    </top>
     <center>
-        <VBox prefWidth="400" prefHeight="400" alignment="CENTER" fx:id="vbox"></VBox>
+        <VBox alignment="CENTER" fx:id="vbox"></VBox>
     </center>
+
 </BorderPane>

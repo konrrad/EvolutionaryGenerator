@@ -55,6 +55,7 @@ public class World {
     }
 
     private void copulateAnimals() {
+        final Multimap<Vector2, Animal> toAdd = ArrayListMultimap.create();
         for (Vector2 position : positionAnimalsMap.keySet()) {
             Collection<Animal> animalsOnPosition = positionAnimalsMap.get(position);
             if (animalsOnPosition.size() >= 2) {
@@ -63,9 +64,10 @@ public class World {
                 final Animal mother = parents.get(1);
                 if (!father.canCopulate() || !mother.canCopulate()) return;
                 final Animal newBorn = father.copulate(mother);
-                positionAnimalsMap.put(findEmptyPositionAround(position), newBorn);
+                toAdd.put(findEmptyPositionAround(position), newBorn);
             }
         }
+        positionAnimalsMap.putAll(toAdd);
     }
 
 

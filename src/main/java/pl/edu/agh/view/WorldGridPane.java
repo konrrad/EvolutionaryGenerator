@@ -37,14 +37,12 @@ public class WorldGridPane extends GridPane {
         this.height = height;
         this.world = world;
         this.terrain = world.getTerrain();
-//        this.setGridLinesVisible(true);
         this.setBorder(new Border(new BorderStroke(Color.BLACK,
                 BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
         setRows(height);
         setCols(width);
         addPlants();
         addAnimals();
-        setPrefSize(400, 400);
 
     }
 
@@ -92,11 +90,11 @@ public class WorldGridPane extends GridPane {
 
 
     public void update() {
-//        setGridLinesVisible(false);
+        setGridLinesVisible(false);
         getChildren().clear();
         addPlants();
         addAnimals();
-//        setGridLinesVisible(true);
+        setGridLinesVisible(true);
     }
 
 
